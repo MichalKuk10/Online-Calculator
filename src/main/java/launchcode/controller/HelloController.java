@@ -18,18 +18,32 @@ public class HelloController {
     public String hello(){
 
         return "<form action=\"/add\" method=\"get\">\n" +
-                "    <label>First Number</label><input type=\"number\" id=\"username\" name=\"username\"> \n" +
-                "    <label>Second Number</label><input type=\"number\" id=\"email\" name=\"email\">\n" +
-                "    <button>Send</button>\n" +
+                "    <label>First Number</label><input type=\"number\" id=\"firstNum\" name=\"firstNum\"> \n" +
+                "    <label>  </label><input type=\"text\" id=\"operator\" name=\"operator\"> \n" +
+
+                "    <label>Second Number</label><input type=\"number\" id=\"SecondNum\" name=\"SecondNum\">\n" +
+                "    <button>Calculate</button>\n" +
                 "</form>";
 
     }
 
     @GetMapping(path="/add")
-    public @ResponseBody Integer addUser(@RequestParam String username, @RequestParam String email) {
-        int fNum = Integer.parseInt(username);
-        int sNum = Integer.parseInt(email);
-        return fNum + sNum;
+    public @ResponseBody String addUser(@RequestParam String firstNum, @RequestParam String SecondNum, @RequestParam String operator) {
+        int fNum = Integer.parseInt(firstNum);
+        int sNum = Integer.parseInt(SecondNum);
+
+        if(operator.equals("+")){
+            return "Result: " + String.valueOf(fNum + sNum);
+        }else if(operator.equals("-")){
+            return "Result: " + String.valueOf(fNum - sNum);
+
+        }else if(operator.equals("*")){
+            return "Result: " + String.valueOf(fNum * sNum);
+        }else if(operator.equals("/")){
+            return "Result: " + String.valueOf(fNum / sNum);
+        }else{
+            return "Wrong input!";
+        }
     }
 
     @GetMapping("/{searchPhrase}")
